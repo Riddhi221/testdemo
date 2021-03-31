@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-md-offset-2 col-sm-offset-1">
+      <form [formGroup]="SignupForm" (submit)="onAddNote()">
+        <div formGroupName="userData">
+          <div class="form-group">
+            <label for="text">Note Title</label>
+            <input type="text" class="form-control" id="title" formControlName="title">
+            <span class="help-block"
+              *ngIf="!SignupForm.get('userData.title').valid&&SignupForm.get('userData.title').touched">
+              <span *ngIf="SignupForm.get('userData.title').errors['required']">field is required</span>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="textBody">Text Body</label>
+            <input type="textBody" class="form-control" id="textBody" formControlName="textBody">
+
+            <span class="help-block"
+              *ngIf="!SignupForm.get('userData.textBody').valid && SignupForm.get('userData.textBody').touched">
+              please enter a valid email id
+            </span>
+          </div>
+        </div>
+        <button [disabled]="SignupForm.invalid" class="btn btn-primary" type="submit">Add Note</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<br>
+<div class="col-sm-6" *ngFor="let item of detailItems">
+  <div class="card text-left">
+    <div class="card-header text-secondary">{{item.title}}
+      <small class="pull-right text-success" (click)="item.canEditCode = true">Edit</small>
+      <small class="pull-right text-danger" (click)="item.canEditCode = false">Close</small>
+    </div>
+    <div class="card-body">
+      <span>{{item.textBody}}</span>
+      <input *ngIf="item.canEditCode" [(ngModel)]="item.name" type="text" class="form-control" />
+    </div>
+  </div>
